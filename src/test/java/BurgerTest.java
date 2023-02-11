@@ -1,8 +1,6 @@
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 import praktikum.*;
 
 import java.util.Arrays;
@@ -10,7 +8,6 @@ import java.util.List;
 
 import static praktikum.IngredientType.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
     Burger burger = new Burger();
     Bun bun;
