@@ -48,7 +48,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void moveIngredientGetPriceValidDataRezultOk() {
+    public void moveIngredientValidDataRezultOk() {
         burger.setBuns(bun);
 
         burger.addIngredient(sauceK);
@@ -68,7 +68,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void removeIngredientGetPriceValidDataRezultOk() {
+    public void removeIngredientValidDataRezultOk() {
         burger.setBuns(bun);
 
         burger.addIngredient(sauceK);
@@ -88,7 +88,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void moveBunGetPriceValidDataRezultOk() {
+    public void moveBunValidDataRezultOk() {
         burger.setBuns(bun);
 
         Assert.assertEquals(bun, burger.bun);
