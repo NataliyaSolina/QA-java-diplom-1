@@ -8,6 +8,8 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import praktikum.*;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,7 +46,7 @@ public class BurgerGetReceiptMockTest {
 
     @Test
     public void setBunGetReceiptValidDataRezultOk() {
-        burger.setBuns(bun);
+        burger.bun = bun;
 
         Mockito.when(burger.getPrice()).thenReturn(price);
         String expectedReceiptBegin = String.format("(==== %s ====)%n", bun.getName());
@@ -56,12 +58,9 @@ public class BurgerGetReceiptMockTest {
 
     @Test
     public void addIngredientGetReceiptValidDataRezultOk() {
-        burger.setBuns(bun);
+        burger.bun = bun;
 
-        burger.addIngredient(sauceK);
-        burger.addIngredient(fillS);
-        burger.addIngredient(sauceS);
-        burger.addIngredient(fillM);
+        burger.ingredients = List.of(sauceK, fillS, sauceS, fillM);
 
         Mockito.when(burger.getPrice()).thenReturn(price);
         String expectedReceiptBegin = String.format("(==== %s ====)%n", bun.getName());
@@ -74,13 +73,13 @@ public class BurgerGetReceiptMockTest {
     }
 
     @Test
-    public void moveIngredientGetReceiptValidDataRezultOk() {
-        burger.setBuns(bun);
+    public void getReceiptAfterMoveIngredientValidDataRezultOk() { //проверка того что после move работает getReceirt
+        burger.bun = bun;
 
-        burger.addIngredient(sauceK);
-        burger.addIngredient(fillS);
-        burger.addIngredient(sauceS);
-        burger.addIngredient(fillM);
+        burger.ingredients.add(sauceK);
+        burger.ingredients.add(fillS);
+        burger.ingredients.add(sauceS);
+        burger.ingredients.add(fillM);
 
         Mockito.when(burger.getPrice()).thenReturn(price);
         String expectedReceiptBegin = String.format("(==== %s ====)%n", bun.getName());
@@ -101,13 +100,13 @@ public class BurgerGetReceiptMockTest {
     }
 
     @Test
-    public void removeIngredientGetReceiptValidDataRezultOk() {
-        burger.setBuns(bun);
+    public void getReceiptAfterRemoveIngredientValidDataRezultOk() { //проверка того что после remove работает getReceirt
+        burger.bun = bun;
 
-        burger.addIngredient(sauceK);
-        burger.addIngredient(fillS);
-        burger.addIngredient(sauceS);
-        burger.addIngredient(fillM);
+        burger.ingredients.add(sauceK);
+        burger.ingredients.add(fillS);
+        burger.ingredients.add(sauceS);
+        burger.ingredients.add(fillM);
 
         Mockito.when(burger.getPrice()).thenReturn(price);
         String expectedReceiptBegin = String.format("(==== %s ====)%n", bun.getName());
@@ -131,8 +130,8 @@ public class BurgerGetReceiptMockTest {
     }
 
     @Test
-    public void moveBunGetReceiptValidDataRezultOk() {
-        burger.setBuns(bun);
+    public void getReceiptAfterMoveBunValidDataRezultOk() {   //проверка того что после замены булки работает getReceirt
+        burger.bun = bun;
 
         burger.setBuns(bunOther);
 

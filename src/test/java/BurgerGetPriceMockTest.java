@@ -7,6 +7,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import praktikum.*;
 
+import java.util.List;
+
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerGetPriceMockTest {
     Burger burger = new Burger();
@@ -35,8 +37,8 @@ public class BurgerGetPriceMockTest {
     }
 
     @Test
-    public void setBunGetPriceValidDataRezultOk() {
-        burger.setBuns(bun);
+    public void getPriceOnlyBunValidDataRezultOk() {
+        burger.bun = bun;
 
         float expectedPrice = bun.getPrice() * 2;
 
@@ -44,13 +46,10 @@ public class BurgerGetPriceMockTest {
     }
 
     @Test
-    public void addIngredientGetPriceValidDataRezultOk() {
-        burger.setBuns(bun);
+    public void getPriceWithIngredientValidDataRezultOk() {
+        burger.bun = bun;
 
-        burger.addIngredient(sauceK);
-        burger.addIngredient(fillS);
-        burger.addIngredient(sauceS);
-        burger.addIngredient(fillM);
+        burger.ingredients = List.of(sauceK, fillS, sauceS, fillM);
 
         float expectedPrice = bun.getPrice() * 2 + sauceK.getPrice() + fillS.getPrice() + sauceS.getPrice() + fillM.getPrice();
 
@@ -58,13 +57,13 @@ public class BurgerGetPriceMockTest {
     }
 
     @Test
-    public void moveIngredientGetPriceValidDataRezultOk() {
-        burger.setBuns(bun);
+    public void getPriceAfterMoveIngredientValidDataRezultOk() { //проверка того что после move работает getPrice
+        burger.bun = bun;
 
-        burger.addIngredient(sauceK);
-        burger.addIngredient(fillS);
-        burger.addIngredient(sauceS);
-        burger.addIngredient(fillM);
+        burger.ingredients.add(sauceK);
+        burger.ingredients.add(fillS);
+        burger.ingredients.add(sauceS);
+        burger.ingredients.add(fillM);
 
         float expectedPrice = bun.getPrice() * 2 + sauceK.getPrice() + fillS.getPrice() + sauceS.getPrice() + fillM.getPrice();
 
@@ -76,18 +75,18 @@ public class BurgerGetPriceMockTest {
     }
 
     @Test
-    public void removeIngredientGetPriceValidDataRezultOk() {
-        burger.setBuns(bun);
+    public void getPriceAfterRemoveIngredientValidDataRezultOk() { //проверка того что после remove работает getPrice
+        burger.bun = bun;
 
-        burger.addIngredient(sauceK);
-        burger.addIngredient(fillS);
-        burger.addIngredient(sauceS);
-        burger.addIngredient(fillM);
+        burger.ingredients.add(sauceK);
+        burger.ingredients.add(fillS);
+        burger.ingredients.add(sauceS);
+        burger.ingredients.add(fillM);
 
         float expectedPrice = bun.getPrice() * 2 + sauceK.getPrice() + fillS.getPrice() + sauceS.getPrice() + fillM.getPrice();
 
         Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
-
+        System.out.println(burger.ingredients.get(2));
         burger.removeIngredient(2);
 
         expectedPrice -= sauceS.getPrice();
@@ -96,8 +95,8 @@ public class BurgerGetPriceMockTest {
     }
 
     @Test
-    public void moveBunGetPriceValidDataRezultOk() {
-        burger.setBuns(bun);
+    public void getPriceAfterMoveBunValidDataRezultOk() { //проверка того что после замены булки работает getPrice
+        burger.bun = bun;
 
         burger.setBuns(bunOther);
 
