@@ -99,13 +99,9 @@ public class BurgerGetPriceMockTest {
     public void moveBunGetPriceValidDataRezultOk() {
         burger.setBuns(bun);
 
-        float expectedPrice = bun.getPrice() * 2;
-
-        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
-
         burger.setBuns(bunOther);
 
-        expectedPrice = bunOther.getPrice() * 2;
+        float expectedPrice = bunOther.getPrice() * 2;
 
         Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
     }

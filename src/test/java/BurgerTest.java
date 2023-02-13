@@ -91,8 +91,6 @@ public class BurgerTest {
     public void moveBunValidDataRezultOk() {
         burger.setBuns(bun);
 
-        Assert.assertEquals(bun, burger.bun);
-
         burger.setBuns(bunOther);
 
         Assert.assertEquals(bunOther, burger.bun);

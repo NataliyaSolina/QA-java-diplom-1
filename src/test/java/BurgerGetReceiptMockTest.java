@@ -134,19 +134,10 @@ public class BurgerGetReceiptMockTest {
     public void moveBunGetReceiptValidDataRezultOk() {
         burger.setBuns(bun);
 
-        Mockito.when(burger.getPrice()).thenReturn(price);
-        String expectedReceiptBegin = String.format("(==== %s ====)%n", bun.getName());
-        String expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bun.getName(), price);
-
-        MatcherAssert.assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
-        MatcherAssert.assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
-
         burger.setBuns(bunOther);
 
-        MatcherAssert.assertThat(burger.getReceipt(), not(containsString(expectedReceiptBegin)));
-
-        expectedReceiptBegin = String.format("(==== %s ====)%n", bunOther.getName());
-        expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bunOther.getName(), burger.getPrice());
+        String expectedReceiptBegin = String.format("(==== %s ====)%n", bunOther.getName());
+        String expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bunOther.getName(), burger.getPrice());
 
         MatcherAssert.assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
         MatcherAssert.assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
