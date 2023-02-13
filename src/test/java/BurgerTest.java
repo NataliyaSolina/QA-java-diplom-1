@@ -3,7 +3,6 @@ import org.junit.Before;
 import org.junit.Test;
 import praktikum.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static praktikum.IngredientType.*;
@@ -43,7 +42,7 @@ public class BurgerTest {
         burger.addIngredient(sauceS);
         burger.addIngredient(fillM);
 
-        List<Ingredient> expectedIngredients = Arrays.asList(sauceK, fillS, sauceS, fillM);
+        List<Ingredient> expectedIngredients = List.of(sauceK, fillS, sauceS, fillM);
 
         Assert.assertEquals(expectedIngredients, burger.ingredients);
     }
@@ -57,13 +56,13 @@ public class BurgerTest {
         burger.addIngredient(sauceS);
         burger.addIngredient(fillM);
 
-        List<Ingredient> expectedIngredients = Arrays.asList(sauceK, fillS, sauceS, fillM);
+        List<Ingredient> expectedIngredients = List.of(sauceK, fillS, sauceS, fillM);
 
         Assert.assertEquals(expectedIngredients, burger.ingredients);
 
         burger.moveIngredient(2, 3);
 
-        List<Ingredient> expectedIngredientsNew = Arrays.asList(sauceK, fillS, fillM, sauceS);
+        List<Ingredient> expectedIngredientsNew = List.of(sauceK, fillS, fillM, sauceS);
 
         Assert.assertEquals(expectedIngredientsNew, burger.ingredients);
     }
@@ -77,13 +76,13 @@ public class BurgerTest {
         burger.addIngredient(sauceS);
         burger.addIngredient(fillM);
 
-        List<Ingredient> expectedIngredients = Arrays.asList(sauceK, fillS, sauceS, fillM);
+        List<Ingredient> expectedIngredients = List.of(sauceK, fillS, sauceS, fillM);
 
         Assert.assertEquals(expectedIngredients, burger.ingredients);
 
         burger.removeIngredient(2);
 
-        List<Ingredient> expectedIngredientsNew = Arrays.asList(sauceK, fillS, fillM);
+        List<Ingredient> expectedIngredientsNew = List.of(sauceK, fillS, fillM);
 
         Assert.assertEquals(expectedIngredientsNew, burger.ingredients);
     }
