@@ -9,6 +9,7 @@ public class BunParameterizedTest {
 
     private final String name;
     private final float price;
+    public Float DELTA = 0.0001f;
 
     public BunParameterizedTest(String name, float price) {
         this.name = name;
@@ -29,6 +30,6 @@ public class BunParameterizedTest {
     public void paramTest() {
         Bun bun = new Bun(name, price);
         Assert.assertEquals(name, bun.getName());
-        Assert.assertEquals(price, bun.getPrice(), 0.0001);
+        Assert.assertEquals(price, bun.getPrice(), DELTA);
     }
 }

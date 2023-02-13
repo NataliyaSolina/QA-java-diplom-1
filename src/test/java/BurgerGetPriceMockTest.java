@@ -22,6 +22,7 @@ public class BurgerGetPriceMockTest {
     Ingredient fillS;
     @Mock
     Ingredient fillM;
+    public Float DELTA = 0.0001f;
 
     @Before
     public void init() {
@@ -39,7 +40,7 @@ public class BurgerGetPriceMockTest {
 
         float expectedPrice = bun.getPrice() * 2;
 
-        Assert.assertEquals(expectedPrice, burger.getPrice(), 0.0001);
+        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
     }
 
     @Test
@@ -53,7 +54,7 @@ public class BurgerGetPriceMockTest {
 
         float expectedPrice = bun.getPrice() * 2 + sauceK.getPrice() + fillS.getPrice() + sauceS.getPrice() + fillM.getPrice();
 
-        Assert.assertEquals(expectedPrice, burger.getPrice(), 0.0001);
+        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
     }
 
     @Test
@@ -67,11 +68,11 @@ public class BurgerGetPriceMockTest {
 
         float expectedPrice = bun.getPrice() * 2 + sauceK.getPrice() + fillS.getPrice() + sauceS.getPrice() + fillM.getPrice();
 
-        Assert.assertEquals(expectedPrice, burger.getPrice(), 0.0001);
+        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
 
         burger.moveIngredient(2, 3);
 
-        Assert.assertEquals(expectedPrice, burger.getPrice(), 0.0001);
+        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
     }
 
     @Test
@@ -85,13 +86,13 @@ public class BurgerGetPriceMockTest {
 
         float expectedPrice = bun.getPrice() * 2 + sauceK.getPrice() + fillS.getPrice() + sauceS.getPrice() + fillM.getPrice();
 
-        Assert.assertEquals(expectedPrice, burger.getPrice(), 0.0001);
+        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
 
         burger.removeIngredient(2);
 
         expectedPrice -= sauceS.getPrice();
 
-        Assert.assertEquals(expectedPrice, burger.getPrice(), 0.0001);
+        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
     }
 
     @Test
@@ -100,12 +101,12 @@ public class BurgerGetPriceMockTest {
 
         float expectedPrice = bun.getPrice() * 2;
 
-        Assert.assertEquals(expectedPrice, burger.getPrice(), 0.0001);
+        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
 
         burger.setBuns(bunOther);
 
         expectedPrice = bunOther.getPrice() * 2;
 
-        Assert.assertEquals(expectedPrice, burger.getPrice(), 0.0001);
+        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
     }
 }

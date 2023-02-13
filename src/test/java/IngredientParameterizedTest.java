@@ -10,6 +10,7 @@ public class IngredientParameterizedTest {
     private final IngredientType type;
     private final String name;
     private final float price;
+    public Float DELTA = 0.0001f;
 
     public IngredientParameterizedTest(IngredientType type, String name, float price) {
         this.type = type;
@@ -34,6 +35,6 @@ public class IngredientParameterizedTest {
         Ingredient ingredient = new Ingredient(type, name, price);
         Assert.assertEquals(type, ingredient.getType());
         Assert.assertEquals(name, ingredient.getName());
-        Assert.assertEquals(price, ingredient.getPrice(), 0.0001);
+        Assert.assertEquals(price, ingredient.getPrice(), DELTA);
     }
 }
