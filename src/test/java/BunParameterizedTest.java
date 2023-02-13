@@ -27,7 +27,7 @@ public class BunParameterizedTest {
     }
 
     @Test
-    public void paramTest() {
+    public void chackBunValidDataResultOk() {
         Bun bun = new Bun(name, price);
         Assert.assertEquals(name, bun.getName());
         Assert.assertEquals(price, bun.getPrice(), DELTA);

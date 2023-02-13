@@ -31,7 +31,7 @@ public class IngredientParameterizedTest {
     }
 
     @Test
-    public void paramTest() {
+    public void chackIngredientsValidDataResultOk() {
         Ingredient ingredient = new Ingredient(type, name, price);
         Assert.assertEquals(type, ingredient.getType());
         Assert.assertEquals(name, ingredient.getName());
