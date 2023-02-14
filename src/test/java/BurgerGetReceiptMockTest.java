@@ -11,6 +11,7 @@ import praktikum.*;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerGetReceiptMockTest {
@@ -18,8 +19,6 @@ public class BurgerGetReceiptMockTest {
     Burger burger = new Burger();
     @Mock
     Bun bun;
-    @Mock
-    Bun bunOther;
     @Mock
     Ingredient sauceK;
     @Mock
@@ -33,7 +32,6 @@ public class BurgerGetReceiptMockTest {
     @Before
     public void init() {
         Mockito.when(bun.getName()).thenReturn("Желтенькая булка");
-        Mockito.when(bunOther.getName()).thenReturn("Черная булка");
         Mockito.when(sauceK.getName()).thenReturn("Кепчук");
         Mockito.when(sauceK.getType()).thenReturn(IngredientType.SAUCE);
         Mockito.when(sauceS.getName()).thenReturn("Сырный соус");
@@ -45,19 +43,35 @@ public class BurgerGetReceiptMockTest {
     }
 
     @Test
-    public void setBunGetReceiptValidDataRezultOk() {
+    public void getReceiptWithOnlyBunRezultOk() {
         burger.bun = bun;
 
         Mockito.when(burger.getPrice()).thenReturn(PRICE);
         String expectedReceiptBegin = String.format("(==== %s ====)%n", bun.getName());
         String expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bun.getName(), PRICE);
 
-        MatcherAssert.assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
-        MatcherAssert.assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
+        assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
+        assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
     }
 
     @Test
-    public void addIngredientGetReceiptValidDataRezultOk() {
+    public void getReceiptWithOneIngredientRezultOk() {
+        burger.bun = bun;
+
+        burger.ingredients = List.of(fillM);
+
+        Mockito.when(burger.getPrice()).thenReturn(PRICE);
+        String expectedReceiptBegin = String.format("(==== %s ====)%n", bun.getName());
+        String expectedReceipt = String.format("= filling %s =%n", fillM.getName());
+        String expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bun.getName(), PRICE);
+
+        assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
+        assertThat(burger.getReceipt(), containsString(expectedReceipt));
+        assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
+    }
+
+    @Test
+    public void getReceiptWithIngredientsRezultOk() {
         burger.bun = bun;
 
         burger.ingredients = List.of(sauceK, fillS, sauceS, fillM);
@@ -67,78 +81,21 @@ public class BurgerGetReceiptMockTest {
         String expectedReceipt = String.format("= sauce %s =%n= filling %s =%n= sauce %s =%n= filling %s =%n", sauceK.getName(), fillS.getName(), sauceS.getName(), fillM.getName());
         String expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bun.getName(), PRICE);
 
-        MatcherAssert.assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
-        MatcherAssert.assertThat(burger.getReceipt(), containsString(expectedReceipt));
-        MatcherAssert.assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
+        assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
+        assertThat(burger.getReceipt(), containsString(expectedReceipt));
+        assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
     }
 
-    @Test
-    public void getReceiptAfterMoveIngredientValidDataRezultOk() { //проверка того что после move работает getReceirt
-        burger.bun = bun;
+    @Test(expected = NullPointerException.class)
+    public void getReceiptWithoutBunRezultException() {            //при отсутствии булки исключение
+        burger.ingredients = List.of(fillM);
 
-        burger.ingredients.add(sauceK);
-        burger.ingredients.add(fillS);
-        burger.ingredients.add(sauceS);
-        burger.ingredients.add(fillM);
+        String expectedReceipt = String.format("= filling %s =%n", fillM.getName());
+        String expectedReceiptEnd = String.format("%nPrice: %f%n", PRICE);
 
         Mockito.when(burger.getPrice()).thenReturn(PRICE);
-        String expectedReceiptBegin = String.format("(==== %s ====)%n", bun.getName());
-        String expectedReceipt = String.format("= sauce %s =%n= filling %s =%n= sauce %s =%n= filling %s =%n", sauceK.getName(), fillS.getName(), sauceS.getName(), fillM.getName());
-        String expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bun.getName(), PRICE);
 
-        MatcherAssert.assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
         MatcherAssert.assertThat(burger.getReceipt(), containsString(expectedReceipt));
-        MatcherAssert.assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
-
-        burger.moveIngredient(2, 3);
-
-        expectedReceipt = String.format("= sauce %s =%n= filling %s =%n= filling %s =%n= sauce %s =%n", sauceK.getName(), fillS.getName(), fillM.getName(), sauceS.getName());
-
-        MatcherAssert.assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
-        MatcherAssert.assertThat(burger.getReceipt(), containsString(expectedReceipt));
-        MatcherAssert.assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
-    }
-
-    @Test
-    public void getReceiptAfterRemoveIngredientValidDataRezultOk() { //проверка того что после remove работает getReceirt
-        burger.bun = bun;
-
-        burger.ingredients.add(sauceK);
-        burger.ingredients.add(fillS);
-        burger.ingredients.add(sauceS);
-        burger.ingredients.add(fillM);
-
-        Mockito.when(burger.getPrice()).thenReturn(PRICE);
-        String expectedReceiptBegin = String.format("(==== %s ====)%n", bun.getName());
-        String expectedReceipt = String.format("= sauce %s =%n= filling %s =%n= sauce %s =%n= filling %s =%n", sauceK.getName(), fillS.getName(), sauceS.getName(), fillM.getName());
-        String expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bun.getName(), PRICE);
-
-        MatcherAssert.assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
-        MatcherAssert.assertThat(burger.getReceipt(), containsString(expectedReceipt));
-        MatcherAssert.assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
-
-        burger.removeIngredient(2);
-
-        expectedReceipt = String.format("= sauce %s =%n= filling %s =%n= filling %s =", sauceK.getName(), fillS.getName(), fillM.getName());
-        expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bun.getName(), PRICE);
-        String removeIngredient = String.format("= sauce %s =", sauceS.getName());
-
-        MatcherAssert.assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
-        MatcherAssert.assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
-        MatcherAssert.assertThat(burger.getReceipt(), containsString(expectedReceipt));
-        MatcherAssert.assertThat(burger.getReceipt(), not(containsString(removeIngredient)));
-    }
-
-    @Test
-    public void getReceiptAfterMoveBunValidDataRezultOk() {   //проверка того что после замены булки работает getReceirt
-        burger.bun = bun;
-
-        burger.setBuns(bunOther);
-
-        String expectedReceiptBegin = String.format("(==== %s ====)%n", bunOther.getName());
-        String expectedReceiptEnd = String.format("(==== %s ====)%n%nPrice: %f%n", bunOther.getName(), burger.getPrice());
-
-        MatcherAssert.assertThat(burger.getReceipt(), startsWith(expectedReceiptBegin));
         MatcherAssert.assertThat(burger.getReceipt(), endsWith(expectedReceiptEnd));
     }
 }

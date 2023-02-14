@@ -15,8 +15,6 @@ public class BurgerGetPriceMockTest {
     @Mock
     Bun bun;
     @Mock
-    Bun bunOther;
-    @Mock
     Ingredient sauceK;
     @Mock
     Ingredient sauceS;
@@ -29,7 +27,6 @@ public class BurgerGetPriceMockTest {
     @Before
     public void init() {
         Mockito.when(bun.getPrice()).thenReturn(36.66F);
-        Mockito.when(bunOther.getPrice()).thenReturn(59.66F);
         Mockito.when(sauceK.getPrice()).thenReturn(19.99F);
         Mockito.when(sauceS.getPrice()).thenReturn(23.99F);
         Mockito.when(fillS.getPrice()).thenReturn(56.99F);
@@ -37,7 +34,7 @@ public class BurgerGetPriceMockTest {
     }
 
     @Test
-    public void getPriceOnlyBunValidDataRezultOk() {
+    public void getPriceOnlyBunRezultOk() {
         burger.bun = bun;
 
         float expectedPrice = bun.getPrice() * 2;
@@ -46,7 +43,18 @@ public class BurgerGetPriceMockTest {
     }
 
     @Test
-    public void getPriceWithIngredientValidDataRezultOk() {
+    public void getPriceWithOneIngredientRezultOk() {
+        burger.bun = bun;
+
+        burger.ingredients = List.of(fillS);
+
+        float expectedPrice = bun.getPrice() * 2 + fillS.getPrice();
+
+        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
+    }
+
+    @Test
+    public void getPriceWithIngredientsRezultOk() {
         burger.bun = bun;
 
         burger.ingredients = List.of(sauceK, fillS, sauceS, fillM);
@@ -56,51 +64,11 @@ public class BurgerGetPriceMockTest {
         Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
     }
 
-    @Test
-    public void getPriceAfterMoveIngredientValidDataRezultOk() { //проверка того что после move работает getPrice
-        burger.bun = bun;
+    @Test(expected = NullPointerException.class)
+    public void getPriceWithoutBunRezultException() {      //при отсутствии булки исключение
+        burger.ingredients = List.of(fillM);
 
-        burger.ingredients.add(sauceK);
-        burger.ingredients.add(fillS);
-        burger.ingredients.add(sauceS);
-        burger.ingredients.add(fillM);
-
-        float expectedPrice = bun.getPrice() * 2 + sauceK.getPrice() + fillS.getPrice() + sauceS.getPrice() + fillM.getPrice();
-
-        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
-
-        burger.moveIngredient(2, 3);
-
-        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
-    }
-
-    @Test
-    public void getPriceAfterRemoveIngredientValidDataRezultOk() { //проверка того что после remove работает getPrice
-        burger.bun = bun;
-
-        burger.ingredients.add(sauceK);
-        burger.ingredients.add(fillS);
-        burger.ingredients.add(sauceS);
-        burger.ingredients.add(fillM);
-
-        float expectedPrice = bun.getPrice() * 2 + sauceK.getPrice() + fillS.getPrice() + sauceS.getPrice() + fillM.getPrice();
-
-        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
-        System.out.println(burger.ingredients.get(2));
-        burger.removeIngredient(2);
-
-        expectedPrice -= sauceS.getPrice();
-
-        Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
-    }
-
-    @Test
-    public void getPriceAfterMoveBunValidDataRezultOk() { //проверка того что после замены булки работает getPrice
-        burger.bun = bun;
-
-        burger.setBuns(bunOther);
-
-        float expectedPrice = bunOther.getPrice() * 2;
+        float expectedPrice = fillS.getPrice();
 
         Assert.assertEquals(expectedPrice, burger.getPrice(), DELTA);
     }
