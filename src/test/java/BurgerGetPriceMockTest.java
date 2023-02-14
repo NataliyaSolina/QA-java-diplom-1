@@ -24,7 +24,7 @@ public class BurgerGetPriceMockTest {
     Ingredient fillS;
     @Mock
     Ingredient fillM;
-    public Float DELTA = 0.0001f;
+    public static final Float DELTA = 0.0001f;
 
     @Before
     public void init() {

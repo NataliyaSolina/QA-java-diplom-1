@@ -9,7 +9,7 @@ public class BunParameterizedTest {
 
     private final String name;
     private final float price;
-    public Float DELTA = 0.0001f;
+    public static final Float DELTA = 0.0001f;
 
     public BunParameterizedTest(String name, float price) {
         this.name = name;

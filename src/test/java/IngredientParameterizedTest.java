@@ -10,7 +10,7 @@ public class IngredientParameterizedTest {
     private final IngredientType type;
     private final String name;
     private final float price;
-    public Float DELTA = 0.0001f;
+    public static final Float DELTA = 0.0001f;
 
     public IngredientParameterizedTest(IngredientType type, String name, float price) {
         this.type = type;
